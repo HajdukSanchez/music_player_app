@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+import 'package:animate_do/animate_do.dart';
+
+import 'package:music_player_app/src/models/models.dart';
+
 class CurrentSongInformation extends StatelessWidget {
   const CurrentSongInformation({Key? key}) : super(key: key);
 
@@ -64,6 +69,8 @@ class _SongImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final audioPlayerModelProvider = Provider.of<AudioPlayerModel>(context);
+
     return Container(
       padding: const EdgeInsets.all(15),
       width: 250,
@@ -77,7 +84,14 @@ class _SongImage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            const Image(image: AssetImage("assets/images/aurora.jpg")),
+            SpinPerfect(
+                infinite: true,
+                animate: false,
+                manualTrigger: true,
+                controller: (animationController) =>
+                    audioPlayerModelProvider.controller = animationController,
+                duration: const Duration(seconds: 10),
+                child: const Image(image: AssetImage("assets/images/aurora.jpg"))),
             Container(
               width: 25,
               height: 25,

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:music_player_app/src/models/models.dart';
+
 class PlaySong extends StatefulWidget {
   const PlaySong({Key? key}) : super(key: key);
 
@@ -25,6 +29,8 @@ class _PlaySongState extends State<PlaySong> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    final audioPlayerModelProvider = Provider.of<AudioPlayerModel>(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: Row(
@@ -47,19 +53,21 @@ class _PlaySongState extends State<PlaySong> with SingleTickerProviderStateMixin
             child: AnimatedIcon(icon: AnimatedIcons.play_pause, progress: _controller),
             elevation: 0,
             highlightElevation: 0,
-            onPressed: onPressButton,
+            onPressed: () => onPressButton(audioPlayerModelProvider),
           )
         ],
       ),
     );
   }
 
-  void onPressButton() {
+  void onPressButton(AudioPlayerModel audioPlayerModelProvider) {
     _isPlaying = !_isPlaying; // toggle the value of _isPlaying
     if (_isPlaying) {
       _controller.reverse(); // reverse the animation
+      audioPlayerModelProvider.controller.stop();
     } else {
       _controller.forward(); // Start the animation
+      audioPlayerModelProvider.controller.repeat();
     }
   }
 }
