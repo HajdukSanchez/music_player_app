@@ -5,8 +5,54 @@ class CurrentSongInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [_SongImage()],
+    return Container(
+      margin: const EdgeInsets.only(top: 50, right: 30),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [_SongImage(), _SongProgressBar()],
+      ),
+    );
+  }
+}
+
+class _SongProgressBar extends StatelessWidget {
+  const _SongProgressBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          '0:0',
+          style: TextStyle(color: Colors.white.withOpacity(0.4)),
+        ),
+        const SizedBox(height: 10),
+        Stack(children: [
+          Container(
+            width: 3,
+            height: 230,
+            color: Colors.white.withOpacity(0.1),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: 3,
+              height: 180,
+              color: Colors.white.withOpacity(0.8),
+            ),
+          )
+        ]),
+        const SizedBox(height: 10),
+        Text(
+          '0:0',
+          style: TextStyle(color: Colors.white.withOpacity(0.4)),
+        )
+      ],
     );
   }
 }
