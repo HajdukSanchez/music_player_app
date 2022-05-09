@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
 
-class PlaySong extends StatelessWidget {
+class PlaySong extends StatefulWidget {
   const PlaySong({Key? key}) : super(key: key);
+
+  @override
+  State<PlaySong> createState() => _PlaySongState();
+}
+
+class _PlaySongState extends State<PlaySong> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _isPlaying = false;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +44,22 @@ class PlaySong extends StatelessWidget {
           ),
           FloatingActionButton(
             backgroundColor: const Color(0xffF8CB51),
-            child: const Icon(Icons.play_arrow_rounded),
+            child: AnimatedIcon(icon: AnimatedIcons.play_pause, progress: _controller),
             elevation: 0,
             highlightElevation: 0,
-            onPressed: () {},
+            onPressed: onPressButton,
           )
         ],
       ),
     );
+  }
+
+  void onPressButton() {
+    _isPlaying = !_isPlaying; // toggle the value of _isPlaying
+    if (_isPlaying) {
+      _controller.reverse(); // reverse the animation
+    } else {
+      _controller.forward(); // Start the animation
+    }
   }
 }
