@@ -9,7 +9,7 @@ class MusicPlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-      children: const [CustomAppBar(), CurrentSongInformation()],
+      children: const [CustomAppBar(), CurrentSongInformation(), PlaySong()],
     ));
   }
 }
