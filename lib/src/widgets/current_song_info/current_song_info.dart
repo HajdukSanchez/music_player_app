@@ -30,10 +30,13 @@ class _SongProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AudioPlayerModel audioPlayerModelProvider = Provider.of<AudioPlayerModel>(context);
+    final double songPercentage = audioPlayerModelProvider.songPercentage;
+
     return Column(
       children: [
         Text(
-          '0:0',
+          audioPlayerModelProvider.songTotalDuration,
           style: TextStyle(color: Colors.white.withOpacity(0.4)),
         ),
         const SizedBox(height: 10),
@@ -47,14 +50,14 @@ class _SongProgressBar extends StatelessWidget {
             bottom: 0,
             child: Container(
               width: 3,
-              height: 180,
+              height: 230 * songPercentage, // 230 is the height of the progress bar
               color: Colors.white.withOpacity(0.8),
             ),
           )
         ]),
         const SizedBox(height: 10),
         Text(
-          '0:0',
+          audioPlayerModelProvider.songCurrentSecond,
           style: TextStyle(color: Colors.white.withOpacity(0.4)),
         )
       ],
